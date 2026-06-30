@@ -3,9 +3,14 @@
 //npm i dotenv
 const express = require("express");
 
+const productos = require("./routes/productos.router");
+
 const app = express();
 
 require("dotenv").config();
+
+app.use(express.json());
+app.use("/productos", productos);
 
 const PORT = process.env.PORT || 3000;
 
@@ -17,12 +22,12 @@ let usuarios = [
   },
   {
     id: 2,
-    nombre: "Lisseth ",
+    nombre: "Marta",
     edad: 21,
   },
   {
     id: 3,
-    nombre: "Lisseth ",
+    nombre: "Maicol ",
     edad: 21,
   },
 ];
