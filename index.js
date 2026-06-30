@@ -1,9 +1,6 @@
-//npm install express para instalar
-//npm install -g nodemon
-//npm i dotenv
 const express = require("express");
 
-const productos = require("./routes/productos.router");
+const productos = require("./routes/productos.routes");
 
 const app = express();
 

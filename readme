@@ -1,1 +1,6 @@
-$ npm install pg
+//$ npm install pg
+//npm i bcrypt
+//npm i jsonwebtoken
+//npm install express para instalar
+//npm install -g nodemon
+//npm i dotenv
