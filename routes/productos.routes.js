@@ -3,9 +3,10 @@ const express = require("express");
 const router = express.Router();
 
 const conexion = require("../database/conexion");
+const autenticacion = require("../middlewares/autenticacion");
 
 //Obteber todo
-router.get("/", async (req, res) => {
+router.get("/", autenticacion, async (req, res) => {
   try {
     const resultado = await conexion.query(`
             select * from productos order by id
