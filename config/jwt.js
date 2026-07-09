@@ -5,6 +5,7 @@ const generToken = (usuario) => {
     {
       id: usuario.id,
       nombre: usuario.nombre,
+      rol: usuario.rol,
     },
     process.env.JWT_SECRET,
     {

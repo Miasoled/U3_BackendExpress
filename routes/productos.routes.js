@@ -4,9 +4,10 @@ const router = express.Router();
 
 const conexion = require("../database/conexion");
 const autenticacion = require("../middlewares/autenticacion");
+const autorizacion = require("../middlewares/autorizacion");
 
 //Obteber todo
-router.get("/", autenticacion, async (req, res) => {
+router.get("/", autenticacion, autorizacion("ADMIN"), async (req, res) => {
   try {
     const resultado = await conexion.query(`
             select * from productos order by id
