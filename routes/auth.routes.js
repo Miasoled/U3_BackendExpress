@@ -17,8 +17,8 @@ router.post("/login", async (req, res) => {
     }
 
     const consulta = `
-        select * from usuarios where correo = $1;
-        `;
+      select * from usuarios where correo = $1;
+      `;
 
     const resultado = await conexion.query(consulta, [correo]);
 
@@ -52,16 +52,24 @@ router.post("/login", async (req, res) => {
 //Nueva ruta
 router.post("/register", async (req, res) => {
   try {
-    const { nombre, correo, password } = req.body;
+    const { nombre, correo, password, rol } = req.body;
 
-    if (!nombre || !correo || !password) {
+    if (!nombre || !correo || !password || !rol) {
       return res.status(400).json({
         mensaje: "Ingrese las credenciales completas",
       });
     }
 
     const consulta = `
-      SELECT id FROM usuarios WHERE correo = $1;
+      SELECT 
+        u.id,
+        u.nombre,
+        u.correo,
+        r.nombre AS rol
+      FROM usuarios u
+      INNER JOIN roles r
+        ON u.id_rol = r.id
+      WHERE u.correo = $1;
     `;
 
     const resultado = await conexion.query(consulta, [correo]);
@@ -76,11 +84,17 @@ router.post("/register", async (req, res) => {
 
     const nuevoUsuario = await conexion.query(
       `
-      INSERT INTO usuarios (nombre, correo, password)
-      VALUES ($1, $2, $3)
+      INSERT INTO usuarios 
+      (nombre, correo, password, id_rol)
+      VALUES (
+        $1,
+        $2,
+        $3,
+        (SELECT id FROM roles WHERE nombre = $4)
+      )
       RETURNING id, nombre, correo;
       `,
-      [nombre, correo, passwordEncriptada],
+      [nombre, correo, passwordEncriptada, rol],
     );
 
     res.status(201).json({
