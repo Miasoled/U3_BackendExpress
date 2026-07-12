@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
 
-const autenticacion = (req, res, next) => {
+const authentication = (req, res, next) => {
   const encabezado = req.headers.authorization;
 
   if (!encabezado) {
     return res.status(401).json({
-      mensaje: "Debe enviar un token",
+      mensaje: "Debe enviar un token.",
     });
   }
 
@@ -13,7 +13,7 @@ const autenticacion = (req, res, next) => {
 
   if (!token) {
     return res.status(401).json({
-      mensaje: "Formato de token inválido",
+      mensaje: "Token inválido.",
     });
   }
 
@@ -25,9 +25,9 @@ const autenticacion = (req, res, next) => {
     next();
   } catch (error) {
     return res.status(401).json({
-      mensaje: "Token inválido o expirado",
+      mensaje: "Token expirado o inválido.",
     });
   }
 };
 
-module.exports = autenticacion;
+module.exports = authentication;
