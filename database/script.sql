@@ -28,11 +28,3 @@ CREATE TABLE productos(
     imagen TEXT
 );
 
---Para Modificar la tabla de Usuarios
-ALTER TABLE usuarios
-ADD COLUMN id_rol INTEGER NOT NULL;
-
-ALTER TABLE usuarios
-ADD CONSTRAINT fk_rol
-FOREIGN KEY (id_rol)
-REFERENCES roles(id);
